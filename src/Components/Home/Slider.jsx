@@ -1,6 +1,6 @@
 // src/components/Slider.jsx
 import React, { useState, useEffect } from 'react';
-import {adBunner1, adBunner2, adBunner3} from '../assets/assets.jsx';
+import {adBunner1, adBunner2, adBunner3} from '../../assets/assets.jsx';
 
 const images = [adBunner1, adBunner2, adBunner3];
 

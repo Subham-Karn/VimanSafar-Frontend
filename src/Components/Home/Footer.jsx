@@ -61,7 +61,7 @@ const Footer = () => (
     </div>
 
     <div className="bg-gray-100 text-center py-4 text-sm text-gray-600">
-      © {new Date().getFullYear()} Vimaan Safar. All Rights Reserved. | Powered by <strong className='text-[#d72f18]'>Supern</strong>
+      © {new Date().getFullYear()} Travel Sphere. All Rights Reserved. | Powered by <strong className='text-[#d72f18]'>Supern</strong>
     </div>
   </footer>
 );

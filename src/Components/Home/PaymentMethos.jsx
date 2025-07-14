@@ -12,10 +12,10 @@ const PaymentMode = () => {
 
   // Accreditation logos (replace with actual image paths)
   const accreditions = [
-    { name: "PCI DSS Compliant", logo: "/logos/pci-dss.png" },
-    { name: "ISO Certified", logo: "/logos/iso-certified.png" },
-    { name: "IATA Approved", logo: "/logos/iata.png" },
-    { name: "Ministry of Tourism", logo: "/logos/mot.png" }
+    { name: "PCI DSS Compliant", logo: "https://www.hirum.com.au/wp-content/uploads/2021/02/pci-logo-whitebg-01.png" },
+    { name: "ISO Certified", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFdDjGwqX_rdVwhyUSy3WJvzpk2yl0t05Hqg&s" },
+    { name: "IATA Approved", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ5qSh8nIVFZAtaiEAZd4bMEAC880R9gukEA&s" },
+    { name: "Ministry of Tourism", logo: "https://egov.eletsonline.com/wp-content/uploads/2024/12/Tourism-Ministry.jpg" }
   ];
 
   return (

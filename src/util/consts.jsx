@@ -42,9 +42,5 @@ export const BookingDeatils = [
   {
     name:"Bus",
     icon: <IoBusOutline className='text-2xl'/>
-  },
-  {
-    name:"Package",
-    icon: <Package  width={20} height={20}/>
   }
 ]

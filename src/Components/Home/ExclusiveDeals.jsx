@@ -8,7 +8,7 @@ const ExcitingDeals = () => {
       discount: "40% OFF",
       description: "Book your summer vacation now!",
       code: "SUMMER40",
-      image: "/images/summer-deal.jpg",
+      image: "https://thumbs.dreamstime.com/b/summer-tours-website-vector-banner-summer-tours-travel-location-icon-pin-tropical-beach-place-summer-tours-website-vector-340945910.jpg",
       expiry: "Offer ends June 30"
     },
     {
@@ -16,7 +16,7 @@ const ExcitingDeals = () => {
       discount: "35% OFF",
       description: "Perfect short trips near you",
       code: "WEEKEND35",
-      image: "/images/weekend-deal.jpg",
+      image: "https://www.atj.com/wp-content/uploads/2023/12/image-116.jpeg",
       expiry: "Limited time offer"
     },
     {
@@ -24,7 +24,7 @@ const ExcitingDeals = () => {
       discount: "25% OFF",
       description: "Special rates for family bookings",
       code: "FAMILY25",
-      image: "/images/family-deal.jpg",
+      image: "https://5.imimg.com/data5/SELLER/Default/2024/6/431025013/RV/BS/HG/113922735/family-tour-package-service.jpg",
       expiry: "Valid all season"
     },
     {
@@ -32,7 +32,7 @@ const ExcitingDeals = () => {
       discount: "30% OFF",
       description: "Spontaneous trips made affordable",
       code: "LASTMIN30",
-      image: "/images/lastmin-deal.jpg",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf_4iRTxHl5np-9FTiwU-T0ViUEo3l9MSE9w&s",
       expiry: "Limited availability"
     }
   ];
@@ -79,11 +79,11 @@ const ExcitingDeals = () => {
           >
             <div className="md:flex">
               {/* Image Section */}
-              <div className="md:w-1/2 h-64 md:h-auto relative">
+              <div className="md:w-1/2 h-64 object-contain md:h-auto relative">
                 <img 
                   src={deals[currentIndex].image} 
                   alt={deals[currentIndex].title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
                 <div className="absolute top-4 right-4 bg-[#d72f18] text-white px-3 py-1 rounded-full flex items-center">
                   <Tag size={16} className="mr-1" />

@@ -1,11 +1,10 @@
 import React from 'react'
-import TravelSection from '../Components/TravelSection'
-import HeroSection from '../Components/Hero'
-import ReasonsToBook from '../Components/ReasonsToBook'
-import ExcitingOffers from '../Components/ExcitingOffers'
-import ExclusiveDeals from '../Components/ExclusiveDeals'
-import PaymentMode from '../Components/PaymentMethos'
-import VimaanSafarReviews from '../Components/VimaanSafarReviews'
+import HeroSection from '../Components/Home/Hero'
+import ReasonsToBook from '../Components/Home/ReasonsToBook'
+import ExcitingOffers from '../Components/Home/ExcitingOffers'
+import ExclusiveDeals from '../Components/Home/ExclusiveDeals'
+import PaymentMode from '../Components/Home/PaymentMethos'
+import VimaanSafarReviews from '../Components/Home/VimaanSafarReviews'
 
 const HomeRoute = () => {
   return (
