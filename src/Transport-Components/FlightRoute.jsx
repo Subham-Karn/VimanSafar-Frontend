@@ -1,31 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, ArrowRight, Clock, CalendarDays, Plane } from 'lucide-react';
+import { MapPin, ArrowRight, Clock, CalendarDays, Plane, CheckCircle } from 'lucide-react';
 import { useTravel } from '../hooks/useHook';
-import { createTravelBooking } from '../util/Transport';
-import { useNavigate } from 'react-router-dom';
+import BookNowModal from '../Mondals/Confirm-Mondals/BookNowMondal';
 
 const FlightRoute = () => {
-  const {setNavName} = useTravel();
+  const { setNavName } = useTravel();
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [flights, setFlights] = useState([]);
   const { travels, loading, error } = useTravel();
-  const navigate = useNavigate();
+
   useEffect(() => {
     if (travels?.travels) {
       const filteredFlights = travels.travels.filter(item => item?.type === 'flight');
       setFlights(filteredFlights);
       setNavName('Flights');
     }
-  }, [travels , setNavName]);
+  }, [travels, setNavName]);
 
-  const handleBooking =async (flight) => {
-    console.log('Booked flight:', flight);
-    setIsBookingOpen(false);
-    await createTravelBooking(flight);
-    navigate('/ticketBooked' ,{state: {flight , onClose:()=>setIsBookingOpen(false) , isOpen: true}});
-    window.location.reload();
-  };
+
 
   // Loading state
   if (loading) {
@@ -76,6 +69,19 @@ const FlightRoute = () => {
         <Plane className="mr-2" size={24} />
         Available Flights
       </h2>
+
+      {/* {bookingError && (
+        <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <XCircle className="h-5 w-5 text-red-500" />
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{bookingError}</p>
+            </div>
+          </div>
+        </div>
+      )} */}
 
       {flights.map((flight) => (
         <div
@@ -159,16 +165,14 @@ const FlightRoute = () => {
         </div>
       ))}
 
-
-      {/* {isBookingOpen && (
-        <TravelConfirmBooking
+      {isBookingOpen && (
+        <BookNowModal
           isOpen={isBookingOpen}
           onClose={() => setIsBookingOpen(false)}
-          selectedItem={selectedFlight}
-          onBook={handleBooking}
+          selectedItem={selectedFlight}  // Changed from selectedItems to selectedItem
           type="flight"
         />
-      )} */}
+      )}
     </div>
   );
 };

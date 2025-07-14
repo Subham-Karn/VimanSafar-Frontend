@@ -36,12 +36,13 @@ const SignupModal = ({ isOpen, onClose }) => {
         setUser(res);
         console.log(res);
         setSuccess('Account Created Successfully');
-        onClose();
+        
     } catch (error) {
        setError(error.message);
     }finally{
         window.location.reload();
         setLoading(false);
+        onClose();
     }
   };
 

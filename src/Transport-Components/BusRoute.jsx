@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTravel } from '../hooks/useHook';
 import { CalendarDays, Clock, MapPin, Bus } from 'lucide-react';
-import BookingModal from '../Mondals/Packages/PackageTickets';
+import BookNowModal from '../Mondals/Confirm-Mondals/BookNowMondal';
 
 /**
  * BusRoute component
@@ -166,8 +166,8 @@ const BusRoute = () => {
 
             {/* Booking Modal */}
             {isBookingOpen && (
-                <BookingModal
-                    type="Bus"
+                <BookNowModal
+                    type="bus"
                     selectedItem={selectedBus}
                     isOpen={isBookingOpen}
                     onClose={() => setIsBookingOpen(false)}

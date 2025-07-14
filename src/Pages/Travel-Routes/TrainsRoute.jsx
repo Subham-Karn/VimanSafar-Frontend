@@ -3,6 +3,7 @@ import { TrainFront, Clock, CalendarDays, MapPin } from 'lucide-react';
 import { useTravel } from '../../hooks/useHook';
 import { useLocation } from 'react-router-dom';
 import NoServiceAvailable from '../../util/NoServiceAvilable';
+import BookNowModal from '../../Mondals/Confirm-Mondals/BookNowMondal';
 
 const TrainSearchResults = () => {
     const [selectedTrain, setSelectedTrain] = useState(null);
@@ -11,22 +12,26 @@ const TrainSearchResults = () => {
     const query = new URLSearchParams(location.search);
     query.get('search');
     const stateData = location.state;
-    const {travels , setNavName} = useTravel();
+    const {travels} = useTravel();
     const localTravel = travels?.travels || [];
     const Trains = localTravel.filter((train) => train?.type === 'train');
-    const fromBasedTrains = Trains.filter((train) => train?.from_location === stateData?.from && train?.to_location === stateData?.to);
-    setNavName('Trains');
-    // const handleBooking = (train) => {
-    //   console.log('Booked Train:', train);
-    //   setIsBookingOpen(false);
-    // };
+    const fromBasedTrains = Trains.filter((train) => {
+   
+      return train?.from_location === stateData?.from && train?.to_location === stateData?.to
+    });
+   
+    const handleBooking = (train) => {
+      console.log('Booked Train:', train);
+      setIsBookingOpen(false);
+
+    };
     if(!fromBasedTrains.length){
+
       return <NoServiceAvailable destination={stateData?.from} type="train"/>
     }
   return (
     <div className="max-w-5xl mx-auto mt-6 space-y-4">
       <h2 className="text-xl font-semibold text-[#d72f18] border-b pb-2">Available Trains</h2>
-
       {fromBasedTrains.map((train) => (
         <div
           key={train.id}
@@ -98,13 +103,13 @@ const TrainSearchResults = () => {
       ))}
 
       {/* Booking Modal */}
-      {/* <BookingModal
+      <BookNowModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
         selectedItem={selectedTrain}
-        onBook={handleBooking}
-        type="Train"
-      /> */}
+        onBooking={handleBooking}
+        type="train"
+      />
     </div>
   );
 };

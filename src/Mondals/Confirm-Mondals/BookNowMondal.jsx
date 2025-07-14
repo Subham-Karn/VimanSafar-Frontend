@@ -4,20 +4,22 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {  TravelBooking } from '../../util/Transport';
 
-const BookNowModal = ({ onClose, isOpen, selectedItem, type, onBooking }) => {
-  const naviagate = useNavigate();
+const BookNowModal = ({ onClose, isOpen, selectedItem, type}) => {
+  const localUser = JSON.parse(localStorage.getItem('user'));
   const [passengerDetails, setPassengerDetails] = useState({
-    passenger_name: '',
-    passenger_email: '',
-    passenger_phone: '',
+    passenger_name: localUser?.profile?.full_name || '',
+    passenger_email:localUser?.Userdata?.user?.email || '',
+    passenger_phone: localUser?.profile?.phone || '',
     travelers: 1,
     cabin: 'Economy'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const localUser = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
   if (!isOpen || !selectedItem) return null;
+
   const getTravelIcon = () => {
     const iconClass = "text-[#d72f18]";
     switch (type) {
@@ -27,45 +29,43 @@ const BookNowModal = ({ onClose, isOpen, selectedItem, type, onBooking }) => {
       default: return <div className={`w-6 h-6 bg-[#d72f18] rounded-full`}></div>;
     }
   };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPassengerDetails(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateForm = () => {
-    if (!passengerDetails.passenger_name.trim()) return setError('Please enter your full name');
-    if (!/^\S+@\S+\.\S+$/.test(passengerDetails.passenger_email)) return setError('Please enter a valid email address');
-    if (!/^\d{10,15}$/.test(passengerDetails.passenger_phone)) return setError('Please enter a valid phone number');
-    setError('');
-    return true;
-  };
+  // const validateForm = () => {
+  //   if (!passengerDetails.passenger_name.trim()) return setError('Please enter your full name');
+  //   if (!/^\S+@\S+\.\S+$/.test(passengerDetails.passenger_email)) return setError('Please enter a valid email address');
+  //   if (!/^\d{10,15}$/.test(passengerDetails.passenger_phone)) return setError('Please enter a valid phone number');
+  //   setError('');
+  //   return true;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!localUser){
+    // if (!validateForm()) return;
+    if (!localUser) {
       alert('Please login first.');
-      return naviagate('/');
+      return onClose();
     }
-    if (!validateForm()) return;
-
     setIsSubmitting(true);
     try {
       const bookingData = {
         ...selectedItem,
         travel_type: type,
-        user_id: selectedItem.user_id || null,
+        user_id: localUser?.Userdata?.user?.id || null,
         passenger_name: passengerDetails.passenger_name,
         passenger_email: passengerDetails.passenger_email,
         passenger_phone: passengerDetails.passenger_phone,
         travelers: Number(passengerDetails.travelers),
         cabin: passengerDetails.cabin,
-        booking_id: `BOOK-${Math.random().toString(36).substr(2, 8).toUpperCase()}`,
-        created_at: new Date().toISOString(),
-        status: 'UNCONFIRMED'
+        status: 'UNCONFIRMED',
+        departure_date: selectedItem.departure_date || new Date().toISOString().split('T')[0],
       };
-      naviagate('/tickets' , {state: bookingData});
-      await onBooking(bookingData);
+
+      await TravelBooking(bookingData);
+      navigate('/tickets', { state:{ticket: bookingData }});
     } catch (err) {
       setError('Failed to book: ' + err.message);
     } finally {
@@ -173,7 +173,7 @@ const BookNowModal = ({ onClose, isOpen, selectedItem, type, onBooking }) => {
                 <input
                   type="text"
                   name="passenger_name"
-                  value={localUser?.profile.full_name ||passengerDetails.passenger_name}
+                  value={passengerDetails.passenger_name}
                   onChange={handleInputChange}
                   className="w-full p-3 border border-gray-300 rounded-lg"
                   placeholder="Enter your full name"
@@ -187,7 +187,7 @@ const BookNowModal = ({ onClose, isOpen, selectedItem, type, onBooking }) => {
                   <input
                     type="email"
                     name="passenger_email"
-                    value={localUser?.Userdata?.user?.email ||passengerDetails.passenger_email}
+                    value={ passengerDetails.passenger_email}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-300 rounded-lg"
                     placeholder="you@example.com"
@@ -199,7 +199,7 @@ const BookNowModal = ({ onClose, isOpen, selectedItem, type, onBooking }) => {
                   <input
                     type="tel"
                     name="passenger_phone"
-                    value={localUser?.profile?.phone || passengerDetails.passenger_phone}
+                    value={ passengerDetails.passenger_phone}
                     onChange={handleInputChange}
                     className="w-full p-3 border border-gray-300 rounded-lg"
                     placeholder="9876543210"

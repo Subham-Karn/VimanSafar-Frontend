@@ -6,10 +6,10 @@ import {
   Train,
   Bus
 } from 'lucide-react';
-import { getAllTickets } from '../util/Transport';
+import { getAllTickets } from '../../util/Transport';
 import { useNavigate } from 'react-router-dom';
-import TicketDetailsModal from '../Mondals/TicketDetailsMondals';
-import { useTravel } from '../hooks/useHook';
+import { useTravel } from '../../hooks/useHook';
+import TicketDetailsModal from './TicketDetailsMondals';
 
 const AllTicketsPage = () => {
   const [bookings, setBookings] = useState([]);
@@ -22,7 +22,10 @@ const AllTicketsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const {setNavName} = useTravel();
-  setNavName(null);
+  const localUser = JSON.parse(localStorage.getItem('user'))
+  const Bookingresult = Array.isArray(bookings)
+    ? bookings.filter(booking => booking.user_id === localUser?.Userdata?.user?.id)
+    : [];
   const fetchBookings = async () => {
     try {
       setError(null);
@@ -32,7 +35,9 @@ const AllTicketsPage = () => {
       if (!Array.isArray(res)) {
         throw new Error('Invalid data format received');
       }
-      setBookings(res || []);
+
+      setBookings(res);
+      
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError(err.message || 'Failed to load tickets');
@@ -41,14 +46,16 @@ const AllTicketsPage = () => {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }
 
   useEffect(() => {
     fetchBookings();
+
   }, []);
 
   const handleRefresh = () => {
     fetchBookings();
+    setNavName(null);
   };
 
   const handleViewDetails = (booking) => {
@@ -56,7 +63,7 @@ const AllTicketsPage = () => {
      setIsModalOpen(true);
   };
 
-  const filteredBookings = bookings
+  const filteredBookings = Bookingresult
     .filter(booking => {
       // Search filter
       const matchesSearch = 

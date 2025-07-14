@@ -3,6 +3,7 @@ import { Plane, Clock, CalendarDays, MapPin } from 'lucide-react';
 import { useTravel } from '../../hooks/useHook';
 import { useLocation } from 'react-router-dom';
 import NoServiceAvailable from '../../util/NoServiceAvilable';
+import BookNowModal from '../../Mondals/Confirm-Mondals/BookNowMondal';
 
 const FlightSearchResults = () => {
   const [selectedFlight, setSelectedFlight] = useState(null);
@@ -25,10 +26,10 @@ const FlightSearchResults = () => {
     return <NoServiceAvailable destination={stateData?.from} type="flight" />;
   }
 
-  // const handleBooking = (flight) => {
-  //   console.log('Booked flight:', flight);
-  //   setIsBookingOpen(false);
-  // };
+  const handleBooking = (flight) => {
+    console.log('Booked flight:', flight);
+    setIsBookingOpen(false);
+  };
 
   return (
     <div className="max-w-5xl mx-auto mt-6 space-y-4">
@@ -99,6 +100,9 @@ const FlightSearchResults = () => {
           </div>
         </div>
       ))}
+      {isBookingOpen && selectedFlight && (
+        <BookNowModal onBooking={handleBooking} onClose={()=>setIsBookingOpen(false)} selectedItems={selectedFlight} isOpen={isBookingOpen} type={'flight'}/>
+      )}
     </div>
   );
 };

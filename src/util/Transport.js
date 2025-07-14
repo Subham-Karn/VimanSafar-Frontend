@@ -10,13 +10,13 @@ export const getAllTravels = async () => {
     return response.json();
 };
 
-export const createTravelBooking = async (data) =>{
-  const res = await axios.post(`${BASE_URL}/create-travel-booking`, data);
-  if (!res) {
-    throw new Error('Something went wrong');
-  }
-  return res.json();
-}
+// export const createTravelBooking = async (data) =>{
+//   const res = await axios.post(`${BASE_URL}/create-travel-booking`, data);
+//   if (!res) {
+//     throw new Error('Something went wrong');
+//   }
+//   return res.json();
+// }
 
 export const TravelBooking = async (data) =>{
   const res = await axios.post(`${BASE_URL}/create-travel-booking`, data);

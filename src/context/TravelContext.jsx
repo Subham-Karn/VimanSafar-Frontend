@@ -13,7 +13,7 @@ const TravelProvider = ({ children }) => {
         
      }
      handleFetchTravel();
-    } , [])
+    } , [travels]);
     return <TravelContext.Provider value={{
         navName,
         travels,

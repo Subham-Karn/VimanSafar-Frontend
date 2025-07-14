@@ -15,6 +15,8 @@ import ErrorBoundary from '../Components/Home/ErrorBoundary'
 import PackageTickets from '../Mondals/Packages/PackageTickets'
 // Package Routes
 import BookedPackages from '../Pages/Package-Routes/PackageBookingList'
+import AllTicketsPage from '../Pages/Travel-Ticket/AllTicketsPage'
+import TicketConfirmationPage from '../Pages/Travel-Ticket/TicketConfirmationPage'
 const MainRoute = () => {
   return (
     <ErrorBoundary>
@@ -38,6 +40,9 @@ const MainRoute = () => {
       <Route path='/mypackages' element={<PublicLayout><PackageTickets /></PublicLayout>} />
       <Route path='/mypackage/bookings' element={<PublicLayout><BookedPackages /></PublicLayout>} />
 
+      {/* Tickets Route */}
+      <Route path='/my-tickets' element={<PublicLayout><AllTicketsPage /></PublicLayout>} />
+      <Route path='/tickets' element={<PublicLayout><TicketConfirmationPage /></PublicLayout>} />
       {/* Admin Routes */}
       <Route path='/admin/*' element={<ProtectedRoute allowRoles={['admin']}><AdminRoute /></ProtectedRoute>} />
     </Routes>

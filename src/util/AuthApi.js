@@ -11,6 +11,8 @@ export const login = async (email, password) => {
 };
 
 export const signup = async (userData) => {
+  console.log(userData);
+  
     const response = await axios.post(`${BASE_URL}/signup`, userData);
     if (!response) {
       throw new Error('Something went wrong ' + response.message);

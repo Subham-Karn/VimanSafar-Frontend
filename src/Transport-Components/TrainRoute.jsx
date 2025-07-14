@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTravel } from '../hooks/useHook';
 import { CalendarDays, Clock, MapPin, TrainFront, ArrowRight } from 'lucide-react';
-import BookingModal from '../Mondals/Packages/PackageTickets';
+import BookNowModal from '../Mondals/Confirm-Mondals/BookNowMondal';
 
 const TrainRoute = () => {
     const { travels, loading, error  , setNavName} = useTravel();
@@ -17,11 +17,6 @@ const TrainRoute = () => {
         }
     }, [travels , setNavName]);
 
-    const handleBooking = (train) => {
-        console.log('Booked Train:', train);
-        setIsBookingOpen(false);
-        // Add any additional booking logic here
-    };
 
     if (loading) {
         return (
@@ -158,12 +153,11 @@ const TrainRoute = () => {
 
             {/* Booking Modal */}
             {isBookingOpen && (
-                <BookingModal
+                <BookNowModal
                     isOpen={isBookingOpen}
                     onClose={() => setIsBookingOpen(false)}
                     selectedItem={selectedTrain}
-                    onBook={handleBooking}
-                    type="Train"
+                    type="train"
                 />
             )}
         </div>
